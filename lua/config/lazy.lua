@@ -12,7 +12,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Setup plugins
 require("lazy").setup({
   { "folke/tokyonight.nvim" },
   {
@@ -21,5 +20,6 @@ require("lazy").setup({
       "nvim-tree/nvim-web-devicons",
     },
   },
-  { "lervag/vimtex" },
+  { "karb94/neoscroll.nvim" },
+  { "lervag/vimtex" },  
 })
