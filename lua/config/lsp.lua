@@ -1,0 +1,54 @@
+-- LSP Configuration for Python and other languages
+
+-- Setup Mason (LSP installer)
+require("mason").setup()
+require("mason-lspconfig").setup({
+  ensure_installed = { "pyright" },  -- Auto-install Python LSP
+})
+
+-- Setup nvim-cmp (autocompletion)
+local cmp = require("cmp")
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.abort(),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    ["<Tab>"] = cmp.mapping.select_next_item(),
+    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+  }),
+  sources = cmp.config.sources({
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+    { name = "buffer" },
+    { name = "path" },
+  }),
+})
+
+-- Setup Python LSP (pyright) - Modern API
+vim.lsp.config.pyright = {
+  cmd = { "pyright-langserver", "--stdio" },
+  filetypes = { "python" },
+  root_markers = { "pyproject.toml", "setup.py", "requirements.txt", ".git" },
+  settings = {
+    python = {
+      analysis = {
+        typeCheckingMode = "basic",
+      },
+    },
+  },
+}
+
+-- Enable LSP for Python files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.lsp.enable("pyright")
+  end,
+})
