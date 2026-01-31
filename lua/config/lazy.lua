@@ -50,4 +50,23 @@ require("lazy").setup({
     event = "InsertEnter",
     config = true,
   },
+
+ -- Telescope (fuzzy finder)
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+
+ -- Git signs in gutter
+  {
+    "lewis6991/gitsigns.nvim",
+    config = true,  -- Uses default config
+  },
+  
+  -- Show keybindings popup
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    config = true,  -- Uses default config
+  },
 })
