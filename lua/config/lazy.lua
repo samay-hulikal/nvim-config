@@ -69,4 +69,9 @@ require("lazy").setup({
     event = "VeryLazy",
     config = true,  -- Uses default config
   },
+  -- Statusline
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
 })
