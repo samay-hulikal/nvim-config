@@ -35,7 +35,27 @@ return {
 
   -- Fraction: ff → \frac{}{}
   s("ff", {
-    t("\\frac{"), i(1), t("}{"), i(2), t("}"),
+    t("\\frac{"), i(1), t("}{"), i(2), t("}"), 
+  }),
+
+  -- Summation: sum -> \sum_{}^{} 
+  s("sum", {
+    t("\\sum_{"), i(1), t("}^{"), i(2), t("}"), 
+  }),
+
+  -- Powers or superscripts: rd -> ^{}
+  s("rd", {
+    t("^{"), i(1), t("}"), 
+  }),
+
+  -- Subscripts: _ -> _{}
+  s("_", {
+    t("_{"), i(1), t("}"), 
+  }),
+
+  -- Inserting text: txt -> \text{}
+  s("txt", {
+    t("\\text{"), i(1), t("}"),
   }),
 
   -- Greek letters
