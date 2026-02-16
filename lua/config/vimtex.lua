@@ -1,5 +1,9 @@
 -- Use general viewer method with displayline
-vim.g.vimtex_view_method = 'general'
+if vim.fn.has("mac") == 1 then
+  vim.g.vimtex_view_method = 'general'
+else
+  vim.g.vimtex_view_method = 'zathura'
+end
 vim.g.vimtex_view_general_viewer = 'displayline'
 vim.g.vimtex_view_general_options = '-r @line @pdf @tex'
 
