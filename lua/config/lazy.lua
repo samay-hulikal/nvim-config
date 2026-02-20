@@ -75,4 +75,10 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
+  -- Indentation guide
+  {
+  "lukas-reineke/indent-blankline.nvim",
+  main = "ibl",
+  config = true,
+  },
 })
