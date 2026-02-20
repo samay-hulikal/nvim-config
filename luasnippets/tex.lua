@@ -14,8 +14,20 @@ s("trigger", {
 })
 
 --]]
-
+-- \begin{figure}[tb]
+-- 	\includegraphics{Figures/sections.png}
+-- 	\caption{The normal sections that yield the principal directions and curvatures for a (a) cylinder and a (b) hyperbolic paraboloid (``saddle'').}
+-- 	\label{fig:sections}
+-- \end{figure}
 return {
+  -- Inserting a figure
+  s("begfig",{
+    t({"\\begin{figure}[tb]", "\t"}),
+    t("\\includegraphics{"), i(1), t({"}", "\t"}),
+    t("\\caption{"), i(2), t({"}", "\t"}),
+    t("\\label{fig:"), i(3), t({"}", "\\end{figure}"}),
+  }),
+
   -- Inline math: mk → $|$
   s("mk", {
     t("$"), i(1), t("$"),
