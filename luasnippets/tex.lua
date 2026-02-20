@@ -12,13 +12,8 @@ s("trigger", {
   i(2),                  -- another tab stop
   rep(1),                -- repeats whatever you typed in i(1)
 })
+]]--
 
---]]
--- \begin{figure}[tb]
--- 	\includegraphics{Figures/sections.png}
--- 	\caption{The normal sections that yield the principal directions and curvatures for a (a) cylinder and a (b) hyperbolic paraboloid (``saddle'').}
--- 	\label{fig:sections}
--- \end{figure}
 return {
   -- Inserting a figure
   s("begfig",{
