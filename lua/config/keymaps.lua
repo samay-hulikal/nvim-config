@@ -20,3 +20,13 @@ end, { silent = true })
 vim.keymap.set({ "i", "s" }, "<C-k>", function()
   require("luasnip").jump(-1)
 end, { silent = true })
+
+-- Jump past closing delimiter
+vim.keymap.set("i", "<C-l>", function()
+  local col = vim.api.nvim_win_get_cursor(0)[2]
+  local line = vim.api.nvim_get_current_line()
+  local char = line:sub(col + 1, col + 1)
+  if char:match("[%)%]%}%$>\"']") then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Right>", true, false, true), "n", false)
+  end
+end, { silent = true })

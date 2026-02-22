@@ -20,28 +20,29 @@ cmp.setup({
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.abort(),
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
-    -- ["<Tab>"] = cmp.mapping.select_next_item(),
-    -- ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-    -- Changed the functionality of tab when luasnippets are involved because of TeX snippets
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if require("luasnip").expand_or_jumpable() then
-        require("luasnip").expand_or_jump()
-      elseif cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
+    ["<Tab>"] = cmp.mapping.select_next_item(),
+    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
 
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if require("luasnip").jumpable(-1) then
-        require("luasnip").jump(-1)
-      elseif cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
+    
+    -- ["<Tab>"] = cmp.mapping(function(fallback)
+    --   if require("luasnip").expand_or_jumpable() then
+    --     require("luasnip").expand_or_jump()
+    --   elseif cmp.visible() then
+    --     cmp.select_next_item()
+    --   else
+    --     fallback()
+    --   end
+    -- end, { "i", "s" }),
+    --
+    -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+    --   if require("luasnip").jumpable(-1) then
+    --     require("luasnip").jump(-1)
+    --   elseif cmp.visible() then
+    --     cmp.select_prev_item()
+    --   else
+    --     fallback()
+    --   end
+    -- end, { "i", "s" }),
   }),
   sources = cmp.config.sources({
     { name = "nvim_lsp" },

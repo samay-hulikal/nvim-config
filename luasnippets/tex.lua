@@ -39,6 +39,13 @@ return {
     i(2),
     t({ "", "\\end{" }), rep(1), t("}"),
   }),
+  
+  -- Environment: begeq → \begin{equation} ... \end{equation}
+  s("begeq", {
+    t("\\begin{equation}\\label{eq:"), i(1), t({ "}", "\t" }),
+    i(2),
+    t({ "", "\\end{equation}" }),
+  }),
 
   -- Fraction: ff → \frac{}{}
   s("ff", {
@@ -65,6 +72,36 @@ return {
     t("\\text{"), i(1), t("}"),
   }),
 
+  -- Inserting bar: bar -> \bar{}
+  s("bar", {
+    t("\\bar{"), i(1), t("}"),
+  }),
+
+  -- Inserting hat: hat -> \hat{}
+  s("hat", {
+    t("\\hat{"), i(1), t("}"),
+  }),
+
+  -- Inserting dot: dot -> \dot{}
+  s("dot", {
+    t("\\dot{"), i(1), t("}"),
+  }),
+
+  -- Inserting ddot: ddot -> \dot{}
+  s("ddot", {
+    t("\\ddot{"), i(1), t("}"),
+  }),
+
+  -- Inserting bigger parentheses: lr( -> \left(\right)
+  s("lr(", {
+    t("\\left("), i(1), t("\\right)"),
+  }),
+
+  -- Math fonts: mbf -> \bm{}
+  s("mbf", {
+    t("\\bm{"), i(1), t("}"),
+  }),
+
   -- Greek letters
   s("@a", { t("\\alpha") }),
   s("@b", { t("\\beta") }),
@@ -76,5 +113,6 @@ return {
   s("@m", { t("\\mu") }),
   s("@p", { t("\\pi") }),
   s("@s", { t("\\sigma") }),
+  s("@k", { t("\\kappa") }),
   s("@z", { t("\\zeta") })
 }
