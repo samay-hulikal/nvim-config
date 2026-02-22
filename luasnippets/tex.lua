@@ -93,7 +93,7 @@ return {
   }),
 
   -- Inserting bigger parentheses: lr( -> \left(\right)
-  s("lr(", {
+  s("lr0", {
     t("\\left("), i(1), t("\\right)"),
   }),
 
