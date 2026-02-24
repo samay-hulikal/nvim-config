@@ -57,6 +57,11 @@ return {
     t("\\sum_{"), i(1), t("}^{"), i(2), t("}"), 
   }),
 
+  -- Integration: intt -> \intt_{}^{} 
+  s("intt", {
+    t("\\int_{"), i(1), t("}^{"), i(2), t("}"), 
+  }),
+
   -- Powers or superscripts: rd -> ^{}
   s("rd", {
     t("^{"), i(1), t("}"), 
@@ -100,6 +105,11 @@ return {
   -- Math fonts: mbf -> \bm{}
   s("mbf", {
     t("\\bm{"), i(1), t("}"),
+  }),
+
+  -- Math fonts: mcal -> \mathcal{}
+  s("mcal", {
+    t("\\mathcal{"), i(1), t("}"),
   }),
 
   -- Greek letters
