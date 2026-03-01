@@ -13,7 +13,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  { "folke/tokyonight.nvim" },
+  -- { "folke/tokyonight.nvim" },
+  { "rose-pine/neovim", name = "rose-pine" },
   {
     "nvim-tree/nvim-tree.lua",
     dependencies = {
