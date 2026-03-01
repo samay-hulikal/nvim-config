@@ -82,4 +82,23 @@ require("lazy").setup({
   main = "ibl",
   config = true,
   },
+
+  -- Trying the nvim-treesitter plugin
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      require('nvim-treesitter').setup {
+        ensure_installed = { "python", "latex", "lua", "vim", "vimdoc" },
+        auto_install = true,
+      }
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "python", "lua", "vim" },
+        callback = function()
+          vim.treesitter.start()
+        end,
+      })
+    end,
+  },
 })
