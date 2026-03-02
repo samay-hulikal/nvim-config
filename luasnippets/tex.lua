@@ -87,6 +87,11 @@ return {
     t("\\hat{"), i(1), t("}"),
   }),
 
+  -- Inserting tld: tld -> \tilde{}
+  s("tld", {
+    t("\\tilde{"), i(1), t("}"),
+  }),
+
   -- Inserting dot: dot -> \dot{}
   s("dot", {
     t("\\dot{"), i(1), t("}"),
@@ -118,10 +123,13 @@ return {
   s("@g", { t("\\gamma") }),
   s("@d", { t("\\delta") }),
   s("@e", { t("\\epsilon") }),
+  s("@ve", { t("\\varepsilon") }),
   s("@o", { t("\\omega") }),
   s("@l", { t("\\lambda") }),
   s("@m", { t("\\mu") }),
   s("@p", { t("\\pi") }),
+  s("@phi", { t("\\phi") }),
+  s("@vphi", { t("\\varphi") }),
   s("@s", { t("\\sigma") }),
   s("@k", { t("\\kappa") }),
   s("@z", { t("\\zeta") })
