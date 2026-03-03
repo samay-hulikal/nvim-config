@@ -131,6 +131,7 @@ return {
   s("@phi", { t("\\phi") }),
   s("@vphi", { t("\\varphi") }),
   s("@s", { t("\\sigma") }),
+  s("@t", { t("\\theta") }),
   s("@k", { t("\\kappa") }),
   s("@z", { t("\\zeta") })
 }
