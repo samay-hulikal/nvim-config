@@ -117,6 +117,11 @@ return {
     t("\\mathcal{"), i(1), t("}"),
   }),
 
+  -- Trig functions
+  s("@sn", { t("\\sin") }),
+  s("@cs", { t("\\cos") }),
+  s("@tn", { t("\\tan") }),
+
   -- Greek letters
   s("@a", { t("\\alpha") }),
   s("@b", { t("\\beta") }),
@@ -125,6 +130,7 @@ return {
   s("@e", { t("\\epsilon") }),
   s("@ve", { t("\\varepsilon") }),
   s("@o", { t("\\omega") }),
+  s("@O", { t("\\Omega") }),
   s("@l", { t("\\lambda") }),
   s("@m", { t("\\mu") }),
   s("@p", { t("\\pi") }),
