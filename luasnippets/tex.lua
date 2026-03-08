@@ -122,10 +122,14 @@ return {
   s("@cs", { t("\\cos") }),
   s("@tn", { t("\\tan") }),
 
+  -- Derivatives
+  s("@pd", { t("\\partial") }),
+
   -- Greek letters
   s("@a", { t("\\alpha") }),
   s("@b", { t("\\beta") }),
   s("@g", { t("\\gamma") }),
+  s("@G", { t("\\Gamma") }),
   s("@d", { t("\\delta") }),
   s("@e", { t("\\epsilon") }),
   s("@ve", { t("\\varepsilon") }),
