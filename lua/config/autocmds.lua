@@ -1,3 +1,4 @@
+-- Allows you to select a template for a fresh .tex file
 vim.api.nvim_create_autocmd("BufNewFile", {
   pattern = "*.tex",
   callback = function()
@@ -16,5 +17,13 @@ vim.api.nvim_create_autocmd("BufNewFile", {
         vim.cmd("0r " .. template_dir .. choice .. ".tex")
       end
     end)
+  end,
+})
+
+-- Enabling treesitter highlighting
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "python", "lua", "vim"},
+  callback = function()
+    vim.treesitter.start()
   end,
 })
