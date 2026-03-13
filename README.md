@@ -51,7 +51,8 @@ sudo npm install -g tree-sitter-cli
 │   │   ├── gitsigns.lua
 │   │   ├── lualine.lua
 │   │   ├── indent-blankline.lua
-│   │   └── treesitter.lua
+│   │   ├── tree-sitter.lua
+│   │   └── todo-comments.lua     # Autocommands (templates, treesitter highlighting)
 │   └── themes/              # Colorscheme configs (swap by editing colorscheme.lua)
 │       ├── rose-pine.lua
 │       └── tokyonight.lua
@@ -77,7 +78,28 @@ sudo npm install -g tree-sitter-cli
 | lualine | Statusline |
 | indent-blankline | Indentation guides |
 | nvim-treesitter | Syntax highlighting |
+| todo-comments | Highlight and search TODO/FIXME/WARN/NOTE |
 
+## Keybindings
+
+| Key | Action |
+|-----|--------|
+| `<Space>` | Leader key |
+| `<leader>e` | Toggle file explorer |
+| `<leader>ff` | Find files |
+| `<leader>fg` | Live grep |
+| `<leader>fb` | Buffers |
+| `<leader>fh` | Help tags |
+| `<C-d>` | Half-page down (centered) |
+| `<C-u>` | Half-page up (centered) |
+| `<C-j>` | Snippet jump forward |
+| `<C-k>` | Snippet jump backward |
+| `<C-l>` | Jump past closing delimiter |
+| `gd` | Go to definition (LSP) |
+| `K` | Hover info (LSP) |
+| `gr` | Find references (LSP) |
+| `<leader>rn` | Rename symbol (LSP) |
+| `<leader>ft` | Find TODOs in project |
 
 ## Adding a New Plugin
 

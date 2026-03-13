@@ -46,6 +46,12 @@ return {
         h5 = "pine",
         h6 = "foam",
       },
+      highlight_groups = {
+        SpellBad = { undercurl = false, underline = true },
+        SpellCap = { undercurl = false, underline = true },
+        SpellLocal = { undercurl = false, underline = true },
+        SpellRare = { undercurl = false, underline = true },
+      },
     })
     vim.cmd("colorscheme rose-pine-moon")
   end,
