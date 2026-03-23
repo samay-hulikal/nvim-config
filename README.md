@@ -79,6 +79,7 @@ sudo npm install -g tree-sitter-cli
 | indent-blankline | Indentation guides |
 | nvim-treesitter | Syntax highlighting |
 | todo-comments | Highlight and search TODO/FIXME/WARN/NOTE |
+| mini.surround | Enclosing characters |
 
 ## Keybindings
 
