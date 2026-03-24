@@ -80,6 +80,7 @@ sudo npm install -g tree-sitter-cli
 | nvim-treesitter | Syntax highlighting |
 | todo-comments | Highlight and search TODO/FIXME/WARN/NOTE |
 | mini.surround | Enclosing characters |
+| mini.tabline | Clean tab lines |
 
 ## Keybindings
 
