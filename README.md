@@ -51,7 +51,9 @@ sudo npm install -g tree-sitter-cli
 │   │   ├── gitsigns.lua
 │   │   ├── lualine.lua
 │   │   ├── indent-blankline.lua
-│   │   ├── tree-sitter.lua
+│   │   ├── treesitter.lua
+│   │   ├── mini-surround.lua
+│   │   ├── mini-tabline.lua
 │   │   └── todo-comments.lua     # Autocommands (templates, treesitter highlighting)
 │   └── themes/              # Colorscheme configs (swap by editing colorscheme.lua)
 │       ├── rose-pine.lua
