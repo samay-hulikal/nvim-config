@@ -33,6 +33,7 @@ sudo npm install -g tree-sitter-cli
 
 ```
 ~/.config/nvim/
+├── yazi/                    # Yazi config; independent of nvim
 ├── init.lua                 # Entry point: bootstraps lazy.nvim, loads config
 ├── lua/
 │   ├── config/
