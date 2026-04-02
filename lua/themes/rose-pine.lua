@@ -47,6 +47,9 @@ return {
         h6 = "foam",
       },
       highlight_groups = {
+        -- Normal = { bg = "#000000" },
+        -- NormalFloat = { bg = "#000000" },
+        -- NormalNC = { bg = "#000000" },
         SpellBad = { undercurl = false, underline = true },
         SpellCap = { undercurl = false, underline = true },
         SpellLocal = { undercurl = false, underline = true },

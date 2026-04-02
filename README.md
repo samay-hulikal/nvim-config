@@ -68,7 +68,7 @@ sudo npm install -g tree-sitter-cli
 
 | Plugin | Purpose |
 |--------|---------|
-| rose-pine/tokyonight | Colorscheme |
+| rose-pine/tokyonight/kanagawa | Colorscheme |
 | nvim-tree | File explorer |
 | vimtex | LaTeX editing and compilation |
 | nvim-lspconfig + mason | Language server support |
@@ -152,6 +152,9 @@ return require("themes.rose-pine")
 
 -- To switch to tokyonight
 return require("themes.tokyonight")
+
+-- To switch to kanagawa
+return require("themes.kanagawa")
 ```
 
 3. Restart nvim
