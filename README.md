@@ -53,11 +53,12 @@ sudo npm install -g tree-sitter-cli
 │   │   ├── lualine.lua
 │   │   ├── indent-blankline.lua
 │   │   ├── treesitter.lua
-│   │   ├── mini-surround.lua
+│   │   ├── nvim-surround
 │   │   ├── mini-tabline.lua
 │   │   └── todo-comments.lua     # Autocommands (templates, treesitter highlighting)
 │   └── themes/              # Colorscheme configs (swap by editing colorscheme.lua)
 │       ├── rose-pine.lua
+│       ├── kanagawa.lua
 │       └── tokyonight.lua
 ├── luasnippets/
 │   └── tex.lua              # Custom LaTeX snippets
