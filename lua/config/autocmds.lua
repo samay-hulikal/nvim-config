@@ -16,7 +16,7 @@ vim.api.nvim_create_autocmd("BufNewFile", {
       if choice then
         vim.cmd("0r " .. template_dir .. choice .. ".tex")
       end
-    end)
+    end, 50)
   end,
 })
 
