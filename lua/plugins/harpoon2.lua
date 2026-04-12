@@ -34,7 +34,7 @@ return {
     vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end, { desc = "Harpoon: add file" })
 
     -- Toggle telescope menu
-    vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Harpoon: telescope menu" })
+    vim.keymap.set("n", "<C-S-e>", function() toggle_telescope(harpoon:list()) end, { desc = "Harpoon: telescope menu" })
 
     -- Quick jump to files 1-4
     vim.keymap.set("n", "<C-j>", function() harpoon:list():select(1) end, { desc = "Harpoon: file 1" })
