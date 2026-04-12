@@ -55,6 +55,7 @@ sudo npm install -g tree-sitter-cli
 │   │   ├── treesitter.lua
 │   │   ├── nvim-surround
 │   │   ├── mini-tabline.lua
+│   │   ├── harpoon2.lua
 │   │   └── todo-comments.lua     # Autocommands (templates, treesitter highlighting)
 │   └── themes/              # Colorscheme configs (swap by editing colorscheme.lua)
 │       ├── rose-pine.lua
@@ -83,7 +84,8 @@ sudo npm install -g tree-sitter-cli
 | indent-blankline | Indentation guides |
 | nvim-treesitter | Syntax highlighting |
 | todo-comments | Highlight and search TODO/FIXME/WARN/NOTE |
-| mini.surround | Enclosing characters |
+| nvim-surround | Enclosing characters |
+| harpoon | Creates a fast navigable list of your files |
 | mini.tabline | Clean tab lines |
 
 ## Keybindings
