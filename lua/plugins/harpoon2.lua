@@ -43,7 +43,7 @@ return {
     vim.keymap.set("n", "<C-;>", function() harpoon:list():select(4) end, { desc = "Harpoon: file 4" })
 
     -- Cycle through harpoon list
-    vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end, { desc = "Harpoon: prev file" })
-    vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end, { desc = "Harpoon: next file" })
+    vim.keymap.set("n", "[h", function() harpoon:list():prev() end)
+    vim.keymap.set("n", "]h", function() harpoon:list():next() end)
   end,
 }
