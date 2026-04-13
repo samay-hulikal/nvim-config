@@ -36,6 +36,9 @@ return {
     -- Toggle telescope menu
     vim.keymap.set("n", "<C-p>", function() toggle_telescope(harpoon:list()) end, { desc = "Harpoon: telescope menu" })
 
+    -- Toggle native menu for reordering
+    vim.keymap.set("n", "<leader>p", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon: edit list" })
+
     -- Quick jump to files 1-4
     vim.keymap.set("n", "<C-j>", function() harpoon:list():select(1) end, { desc = "Harpoon: file 1" })
     vim.keymap.set("n", "<C-k>", function() harpoon:list():select(2) end, { desc = "Harpoon: file 2" })
