@@ -26,3 +26,4 @@ require("lazy").setup("plugins")
 
 -- -- Load snippets
 -- require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/luasnippets" })
+
