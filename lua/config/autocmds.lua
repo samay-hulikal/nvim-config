@@ -44,11 +44,3 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.treesitter.start()
   end,
 })
-
--- Reloads synced files since nvim does not do this automatically
-vim.o.autoread = true
-
-vim.api.nvim_create_autocmd({"BufWritePre", "CursorHold"}, {
-  pattern = "*",
-  command = "silent! checktime"
-})
