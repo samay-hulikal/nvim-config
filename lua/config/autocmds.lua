@@ -50,5 +50,5 @@ vim.o.autoread = true
 
 vim.api.nvim_create_autocmd({"BufWritePre", "CursorHold"}, {
   pattern = "*",
-  command = "checktime"
+  command = "silent! checktime"
 })
