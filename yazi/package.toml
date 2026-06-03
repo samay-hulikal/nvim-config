@@ -1,0 +1,11 @@
+[plugin.deps]
+use = "qwjyh/relative-path"
+rev = "87dcc68"
+hash = "7a423e9b7e89803105442878eb0fe242"
+# [[plugin.deps]]
+# use = "qwjyh/relative-path"
+# rev = "87dcc68"
+# hash = "7a423e9b7e89803105442878eb0fe242"
+
+[flavor]
+deps = []
