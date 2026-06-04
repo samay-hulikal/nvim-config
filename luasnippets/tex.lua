@@ -72,6 +72,11 @@ return {
     t("_{"), i(1), t("}"), 
   }),
 
+  -- Square root: sqrt -> \sqrt{}
+  s("sqrt", {
+    t("\\sqrt{"), i(1), t("}"), 
+  }),
+
   -- Inserting text: txt -> \text{}
   s("txt", {
     t("\\text{"), i(1), t("}"),
@@ -115,6 +120,11 @@ return {
   -- Math fonts: mcal -> \mathcal{}
   s("mcal", {
     t("\\mathcal{"), i(1), t("}"),
+  }),
+
+  -- Math fonts: mfrak -> \mathfrak{}
+  s("mfrak", {
+    t("\\mathfrak{"), i(1), t("}"),
   }),
 
   -- Trig functions
