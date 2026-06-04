@@ -136,6 +136,7 @@ return {
   s("@o", { t("\\omega") }),
   s("@O", { t("\\Omega") }),
   s("@l", { t("\\lambda") }),
+  s("@L", { t("\\Lambda") }),
   s("@m", { t("\\mu") }),
   s("@p", { t("\\pi") }),
   s("@phi", { t("\\phi") }),
