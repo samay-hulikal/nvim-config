@@ -47,6 +47,16 @@ return {
     t({ "", "\\end{equation}" }),
   }),
 
+  -- Inserting equation numbers: eq. → Eq. (\ref{eq:})
+  s("eq.", {
+    t("Eq. (\\ref{eq:"), i(1), t("})"), 
+  }),
+
+  -- Inserting figure numbers: fig. → Fig. \ref{fig:}
+  s("fig.", {
+    t("Fig. \\ref{fig:"), i(1), t("}"), 
+  }),
+
   -- Fraction: ff → \frac{}{}
   s("ff", {
     t("\\frac{"), i(1), t("}{"), i(2), t("}"), 
@@ -152,6 +162,7 @@ return {
   s("@phi", { t("\\phi") }),
   s("@vphi", { t("\\varphi") }),
   s("@s", { t("\\sigma") }),
+  s("@r", { t("\\rho") }),
   s("@t", { t("\\theta") }),
   s("@k", { t("\\kappa") }),
   s("@z", { t("\\zeta") })
