@@ -138,6 +138,9 @@ return {
   }),
 
   -- Trig functions
+  s("@e", { t("\\exp") }),
+
+  -- Trig functions
   s("@sn", { t("\\sin") }),
   s("@cs", { t("\\cos") }),
   s("@tn", { t("\\tan") }),
@@ -151,7 +154,7 @@ return {
   s("@g", { t("\\gamma") }),
   s("@G", { t("\\Gamma") }),
   s("@d", { t("\\delta") }),
-  s("@e", { t("\\epsilon") }),
+  s("@ep", { t("\\epsilon") }),
   s("@ve", { t("\\varepsilon") }),
   s("@o", { t("\\omega") }),
   s("@O", { t("\\Omega") }),
