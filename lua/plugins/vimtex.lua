@@ -7,8 +7,14 @@ return {
       vim.g.vimtex_view_method = "general"
       vim.g.vimtex_view_general_viewer = "displayline"
       vim.g.vimtex_view_general_options = "-r @line @pdf @tex"
+    -- else
+      -- vim.g.vimtex_view_method = "okular"
     else
-      vim.g.vimtex_view_method = "zathura"
+      vim.fn.serverstart("/tmp/nvim")
+      vim.g.vimtex_view_method = "general"
+      vim.g.vimtex_view_general_viewer = "okular"
+      vim.g.vimtex_view_general_options = "--unique file:@pdf\\#src:@line@tex"
+    -- end
     end
     vim.g.vimtex_compiler_method = "latexmk"
     vim.g.vimtex_compiler_latexmk = {
