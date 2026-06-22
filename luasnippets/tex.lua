@@ -87,6 +87,11 @@ return {
     t("\\sqrt{"), i(1), t("}"), 
   }),
 
+  -- Bold font bm: bm -> \bm{}
+  s("bm", {
+    t("\\bm{"), i(1), t("}"),
+  }),
+
   -- Inserting text: txt -> \text{}
   s("txt", {
     t("\\text{"), i(1), t("}"),
@@ -162,6 +167,7 @@ return {
   s("@L", { t("\\Lambda") }),
   s("@m", { t("\\mu") }),
   s("@p", { t("\\pi") }),
+  s("@ps", { t("\\psi") }),
   s("@phi", { t("\\phi") }),
   s("@vphi", { t("\\varphi") }),
   s("@s", { t("\\sigma") }),
