@@ -16,6 +16,13 @@ nofootinbib
 
 \newcommand{\zcite}[2]{\href{zotero://select/library/items/@#2}{#1}}
 \newcommand{\linklocalfile}[2]{\href{run:#2}{#1}}
+
+% Control which levels appear in the TOC: comment/uncomment lines to show/hide levels
+\makeatletter
+% \def\l@section#1#2{}        % uncomment to hide sections
+% \def\l@subsection#1#2{}     % uncomment to hide subsections
+\def\l@subsubsection#1#2{}    % hides subsubsections
+\makeatother
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \title{Title}
