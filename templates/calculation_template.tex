@@ -14,9 +14,10 @@ nofootinbib
 \definecolor{mycolor}{rgb}{1,0.45,0.45}
 \usepackage[colorlinks=true, allcolors=mycolor]{hyperref}
 
-\newcommand{\zcite}[2]{\href{zotero://select/library/items/@#2}{#1}}
-\newcommand{\linklocalfile}[2]{\href{run:#2}{#1}} 
-% From what I can tell, internal file links work consistently on macOS and Fedora only when Obsidian has been nudged at least once from the device trying to open the internal link. 
+\newcommand{\zcite}[2]{\href{zotero://select/library/items/@#2}{\textsf{#1}} \cite{#2}}
+\newcommand{\linklocalfile}[2]{\href{run:#2}{\textsc{#1}}}
+% From what I can tell, internal file links work consistently on macOS and Fedora only when Obsidian has been nudged at least once before from the device trying to open the internal link. 
+\newcommand{\linkurl}[2]{\href{run:#2}{\texttt{#1}}}
 
 % Control which levels appear in the TOC: comment/uncomment lines to show/hide levels
 \makeatletter
