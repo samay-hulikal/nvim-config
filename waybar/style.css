@@ -1,0 +1,90 @@
+* {
+    font-family: "JetBrainsMonoNL Nerd Font", monospace;
+    font-size: 13px;
+    min-height: 0;
+}
+window#waybar {
+    background: transparent;
+}
+#workspaces,
+#mode,
+#clock,
+#mpris,
+#memory,
+#pulseaudio,
+#network,
+#tray {
+    background-color: #011627;
+    color: #c3ccdc;
+    border-radius: 10px;
+    padding: 0 12px;
+    margin: 0 2px;
+}
+#workspaces button {
+    padding: 0 8px;
+    color: #c3ccdc;
+    background: transparent;
+    border-radius: 8px;
+}
+#workspaces button.focused {
+    color: #011627;
+    background-color: #82aaff;
+}
+#workspaces button.urgent {
+    color: #011627;
+    background-color: #ff5874;
+}
+#workspaces button:hover {
+    background-color: #2c3043;
+}
+#mode {
+    background-color: #ff5874;
+    color: #011627;
+}
+#clock {
+    color: #82aaff;
+    font-weight: bold;
+}
+#mpris {
+    color: #c792ea;
+}
+#mpris.playing {
+    color: #82aaff;
+}
+#mpris.paused {
+    color: #c3ccdc;
+    opacity: 0.7;
+}
+#memory {
+    color: #f78c6c;
+}
+#pulseaudio {
+    color: #82aaff;
+}
+#pulseaudio.muted {
+    color: #ff5874;
+}
+#network {
+    color: #c3ccdc;
+}
+#network.disconnected {
+    color: #ff5874;
+}
+#tray {
+    background-color: #011627;
+}
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #ff5874;
+}
+tooltip {
+    background: #0e293f;
+    border: 1px solid #1d3b53;
+    border-radius: 8px;
+}
+tooltip label {
+    color: #c3ccdc;
+}
