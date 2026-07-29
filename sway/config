@@ -68,7 +68,7 @@ bindsym $mod+Shift+l move right
 ### Layout and window management
 bindsym $mod+Return exec $term
 bindsym $mod+slash layout toggle split
-bindsym $mod+semicolon layout toggle tabbed split
+bindsym $mod+comma layout toggle tabbed split
 bindsym $mod+Ctrl+f fullscreen toggle
 bindsym $mod+Ctrl+s layout stacking
 bindsym $mod+Ctrl+g layout tabbed
