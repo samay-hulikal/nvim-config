@@ -9,7 +9,7 @@
     "margin-right": 10,
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock", "mpris"],
-    "modules-right": ["pulseaudio", "network", "memory", "tray"],
+    "modules-right": ["bluetooth", "pulseaudio", "network", "memory"],
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": false,
@@ -50,6 +50,13 @@
         },
         "max-length": 45,
         "tooltip-format": "{player}: {dynamic}"
+    },
+    "bluetooth": {
+        "format": " {status}",
+        "format-connected": " {device_alias}",
+        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+        "tooltip-format-connected": "{controller_alias}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_battery_percentage}%"
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",

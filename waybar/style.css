@@ -13,6 +13,7 @@ window#waybar {
 #memory,
 #pulseaudio,
 #network,
+#bluetooth,
 #tray {
     background-color: #011627;
     color: #c3ccdc;
@@ -57,6 +58,12 @@ window#waybar {
 }
 #memory {
     color: #f78c6c;
+}
+#bluetooth {
+    color: #82aaff;
+}
+#bluetooth.connected {
+    color: #c3ccdc;
 }
 #pulseaudio {
     color: #82aaff;
