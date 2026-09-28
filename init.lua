@@ -24,6 +24,9 @@ require("config.autocmds")
 -- Load plugins from lua/plugins/ directory
 require("lazy").setup("plugins")
 
+-- Claude-created custom Zotero and citing plugin
+require("config.zcite").setup()
+
 -- -- Load snippets
 -- require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/luasnippets" })
 
