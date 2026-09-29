@@ -6,3 +6,5 @@ vim.opt.autoindent = true
 vim.opt.spell = true
 vim.opt.spelllang = "en_us"
 vim.opt.spellfile = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+
+pcall(require, "config.clipboard")
