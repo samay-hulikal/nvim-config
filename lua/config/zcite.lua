@@ -172,15 +172,9 @@ local function format_item(item)
   return string.format("%s (%s) — %s  [%s]", who, M.year(item) or "n.d.", item.title or "", citekey(item) or "?")
 end
 
--- insert \zcite and add the entry to the .bib
-local function choose(item, buf, win, pos)
+-- write \zcite{…}{key} at the saved cursor position
+local function insert_zcite(item, buf, win, pos)
   local key = citekey(item)
-  local bib = find_bib(buf)
-  append_bib(bib, key, function(added)
-    notify(added and ("added " .. key .. " to " .. vim.fn.fnamemodify(bib, ":~:."))
-      or (key .. " already in " .. vim.fn.fnamemodify(bib, ":~:.")))
-  end)
-
   if type(M.config.label) == "function" then
     insert_text(buf, win, pos, string.format("\\zcite{%s}{%s}", tex_escape(M.config.label(item)), key))
     return
@@ -198,6 +192,17 @@ local function choose(item, buf, win, pos)
       vim.cmd("startinsert")
     end, 20)
   end
+end
+
+-- insert \zcite and add the entry to the .bib
+local function choose(item, buf, win, pos)
+  local key = citekey(item)
+  local bib = find_bib(buf)
+  append_bib(bib, key, function(added)
+    notify(added and ("added " .. key .. " to " .. vim.fn.fnamemodify(bib, ":~:."))
+      or (key .. " already in " .. vim.fn.fnamemodify(bib, ":~:.")))
+  end)
+  insert_zcite(item, buf, win, pos)
 end
 
 -- simple prompt + vim.ui.select flow (fallback, and :Zcite <query>)
@@ -253,6 +258,57 @@ local function preview_lines(item)
   return lines
 end
 
+-- shared Telescope pieces (row layout, preview pane, <CR> action)
+local function tel_entry_maker()
+  local displayer = require("telescope.pickers.entry_display").create({
+    separator = "  ",
+    items = { { width = 18 }, { width = 4 }, { remaining = true } },
+  })
+  return function(item)
+    local a = item.author and item.author[1]
+    local who = a and (a.family or a.literal) or "?"
+    if item.author and #item.author > 1 then who = who .. " +" end
+    local year = M.year(item) or "n.d."
+    local title = item.title or ""
+    local all_names = {}
+    for _, au in ipairs(item.author or {}) do all_names[#all_names + 1] = au.family or au.literal or "" end
+    return {
+      value = item,
+      -- what the fuzzy matcher sees: every author, year, title, key, journal
+      ordinal = table.concat({ table.concat(all_names, " "), year, title, citekey(item) or "",
+        item["container-title"] or "" }, " "),
+      display = function()
+        return displayer({ { who, "TelescopeResultsIdentifier" }, { year, "TelescopeResultsNumber" }, title })
+      end,
+    }
+  end
+end
+
+local function tel_previewer()
+  return require("telescope.previewers").new_buffer_previewer({
+    title = "Details",
+    define_preview = function(self, entry)
+      vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, preview_lines(entry.value))
+      vim.api.nvim_set_option_value("wrap", true, { win = self.state.winid })
+      vim.api.nvim_set_option_value("linebreak", true, { win = self.state.winid })
+      vim.api.nvim_set_option_value("filetype", "markdown", { buf = self.state.bufnr })
+    end,
+  })
+end
+
+local function tel_on_select(fn)
+  local actions = require("telescope.actions")
+  local action_state = require("telescope.actions.state")
+  return function(prompt_bufnr)
+    actions.select_default:replace(function()
+      local entry = action_state.get_selected_entry()
+      actions.close(prompt_bufnr)
+      if entry then fn(entry.value) end
+    end)
+    return true
+  end
+end
+
 function M.telescope(opts)
   local has_tel = pcall(require, "telescope")
   if not has_tel then return M.pick() end
@@ -261,20 +317,10 @@ function M.telescope(opts)
   local pickers = require("telescope.pickers")
   local finders = require("telescope.finders")
   local sorters = require("telescope.sorters")
-  local previewers = require("telescope.previewers")
-  local actions = require("telescope.actions")
-  local action_state = require("telescope.actions.state")
-  local entry_display = require("telescope.pickers.entry_display")
 
   local buf = vim.api.nvim_get_current_buf()
   local win = vim.api.nvim_get_current_win()
   local pos = vim.api.nvim_win_get_cursor(win)
-
-  local displayer = entry_display.create({
-    separator = "  ",
-    items = { { width = 18 }, { width = 4 }, { remaining = true } },
-  })
-
   local cache, warned = {}, false
   local function query(prompt)
     prompt = vim.trim(prompt or "")
@@ -299,46 +345,174 @@ function M.telescope(opts)
   pickers.new(opts, {
     prompt_title = "Zotero",
     debounce = M.config.debounce,
-    finder = finders.new_dynamic({
-      fn = query,
-      entry_maker = function(item)
-        local a = item.author and item.author[1]
-        local who = a and (a.family or a.literal) or "?"
-        if item.author and #item.author > 1 then who = who .. " +" end
-        local year = M.year(item) or "n.d."
-        local title = item.title or ""
-        return {
-          value = item,
-          ordinal = table.concat({ who, year, title, citekey(item) }, " "),
-          display = function()
-            return displayer({
-              { who, "TelescopeResultsIdentifier" },
-              { year, "TelescopeResultsNumber" },
-              title,
-            })
-          end,
-        }
-      end,
-    }),
+    finder = finders.new_dynamic({ fn = query, entry_maker = tel_entry_maker() }),
     -- Zotero already did the matching; just highlight what you typed
     sorter = sorters.highlighter_only(opts),
-    previewer = previewers.new_buffer_previewer({
-      title = "Details",
-      define_preview = function(self, entry)
-        vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, preview_lines(entry.value))
-        vim.api.nvim_set_option_value("wrap", true, { win = self.state.winid })
-        vim.api.nvim_set_option_value("linebreak", true, { win = self.state.winid })
-        vim.api.nvim_set_option_value("filetype", "markdown", { buf = self.state.bufnr })
-      end,
-    }),
-    attach_mappings = function(prompt_bufnr)
-      actions.select_default:replace(function()
-        local entry = action_state.get_selected_entry()
-        actions.close(prompt_bufnr)
-        if entry then choose(entry.value, buf, win, pos) end
-      end)
-      return true
-    end,
+    previewer = tel_previewer(),
+    attach_mappings = tel_on_select(function(item) choose(item, buf, win, pos) end),
+  }):find()
+end
+
+-- ---------------------------------------------------------------------------
+-- <space>zx: pick from the entries already in your .bib (no Zotero needed)
+
+-- LaTeX-ish field text → readable text
+local function bib_clean(s)
+  if not s then return nil end
+  s = s:gsub("\\&", "&"):gsub("\\%%", "%%"):gsub("\\_", "_")
+  s = s:gsub("\\%a+%s*", "")     -- \emph, \textit, \ss ... (keep their argument)
+  s = s:gsub("\\[^%a%s]", "")    -- accents: \"o \'e \^{i}
+  s = s:gsub("[{}$]", ""):gsub("~", " "):gsub("%s+", " ")
+  return vim.trim(s)
+end
+
+-- value starting at p: {…}, "…" or a bare word; returns raw text and position after it
+local function bib_value(body, p)
+  local c = body:sub(p, p)
+  if c == "{" then
+    local depth, j = 0, p
+    while j <= #body do
+      local ch = body:sub(j, j)
+      if ch == "{" then depth = depth + 1 elseif ch == "}" then depth = depth - 1 end
+      if depth == 0 then return body:sub(p + 1, j - 1), j + 1 end
+      j = j + 1
+    end
+    return body:sub(p + 1), #body + 1
+  elseif c == '"' then
+    local depth, j = 0, p + 1
+    while j <= #body do
+      local ch = body:sub(j, j)
+      if ch == "{" then depth = depth + 1 elseif ch == "}" then depth = depth - 1
+      elseif ch == '"' and depth == 0 and body:sub(j - 1, j - 1) ~= "\\" then
+        return body:sub(p + 1, j - 1), j + 1
+      end
+      j = j + 1
+    end
+    return body:sub(p + 1), #body + 1
+  else
+    local v, e = body:match("^([^,#%s}]*)()", p)
+    return v, e, true -- bare word: a number or an @string macro
+  end
+end
+
+-- split "A and B and {C and D}" on top-level " and "
+local function split_names(raw)
+  local out, depth, start, i = {}, 0, 1, 1
+  while i <= #raw do
+    local ch = raw:sub(i, i)
+    if ch == "{" then depth = depth + 1 elseif ch == "}" then depth = depth - 1
+    elseif depth == 0 then
+      local s, e = raw:find("^%s+[Aa][Nn][Dd]%s+", i)
+      if s then
+        out[#out + 1] = raw:sub(start, i - 1)
+        start, i = e + 1, e
+      end
+    end
+    i = i + 1
+  end
+  out[#out + 1] = raw:sub(start)
+  local names = {}
+  for _, n in ipairs(out) do
+    n = vim.trim(n)
+    if n ~= "" then
+      local fam, giv = n:match("^(.-),%s*(.*)$")
+      if not fam then
+        if n:match("^{.*}$") then
+          fam, giv = n, "" -- {Corporate Author}
+        else
+          giv, fam = n:match("^(.-)%s*(%S+)$")
+        end
+      end
+      names[#names + 1] = { family = bib_clean(fam), given = bib_clean(giv or "") }
+    end
+  end
+  return names
+end
+
+function M.parse_bib(text)
+  local items, macros, i = {}, {}, 1
+
+  -- field list "name = value, ..." → table (lower-cased names)
+  local function fields(body, p)
+    local f = {}
+    while p and p <= #body do
+      local name, vp = body:match("^[%s,]*([%w_%-%.:]+)%s*=%s*()", p)
+      if not name then break end
+      local parts = {}
+      local v, bare
+      repeat
+        v, p, bare = bib_value(body, vp)
+        if bare then v = macros[v:lower()] or v end
+        parts[#parts + 1] = v
+        vp = body:match("^%s*#%s*()", p) -- "a" # "b" concatenation
+      until not vp
+      f[name:lower()] = table.concat(parts)
+    end
+    return f
+  end
+
+  while true do
+    local s, e, typ, open = text:find("@%s*(%a+)%s*([{(])", i)
+    if not s then break end
+    local close = open == "{" and "}" or ")"
+    local depth, j = 1, e + 1
+    while j <= #text and depth > 0 do
+      local ch = text:sub(j, j)
+      if ch == open then depth = depth + 1 elseif ch == close then depth = depth - 1 end
+      j = j + 1
+    end
+    local body = text:sub(e + 1, j - 2)
+    i = j
+    typ = typ:lower()
+    if typ == "string" then
+      for k, v in pairs(fields(body, 1)) do macros[k] = v end
+    elseif typ ~= "comment" and typ ~= "preamble" then
+      local key, p = body:match("^%s*([^,%s]+)%s*,()")
+      if key then
+        local f = fields(body, p)
+        local year = f.year and f.year:match("%d%d%d%d") or (f.date and f.date:match("%d%d%d%d"))
+        items[#items + 1] = {
+          citekey = key,
+          title = bib_clean(f.title),
+          author = split_names(f.author or f.editor or ""),
+          issued = year and { ["date-parts"] = { { tonumber(year) } } } or nil,
+          ["container-title"] = bib_clean(f.journal or f.journaltitle or f.booktitle or f.publisher),
+          volume = f.volume,
+          page = f.pages and bib_clean(f.pages),
+          DOI = f.doi,
+          abstract = bib_clean(f.abstract),
+        }
+      end
+    end
+  end
+  return items
+end
+
+function M.telescope_bib(opts)
+  local has_tel = pcall(require, "telescope")
+  if not has_tel then return notify("needs telescope.nvim", vim.log.levels.ERROR) end
+  opts = opts or {}
+
+  local buf = vim.api.nvim_get_current_buf()
+  local win = vim.api.nvim_get_current_win()
+  local pos = vim.api.nvim_win_get_cursor(win)
+
+  local bib = find_bib(buf)
+  local fh = io.open(bib, "r")
+  if not fh then
+    return notify("no bib file at " .. vim.fn.fnamemodify(bib, ":~:.") .. " (cite something with <leader>zz first)",
+      vim.log.levels.WARN)
+  end
+  local items = M.parse_bib(fh:read("*a"))
+  fh:close()
+  if #items == 0 then return notify("no entries in " .. vim.fn.fnamemodify(bib, ":~:."), vim.log.levels.WARN) end
+
+  require("telescope.pickers").new(opts, {
+    prompt_title = vim.fn.fnamemodify(bib, ":t"),
+    finder = require("telescope.finders").new_table({ results = items, entry_maker = tel_entry_maker() }),
+    sorter = require("telescope.config").values.generic_sorter(opts),
+    previewer = tel_previewer(),
+    attach_mappings = tel_on_select(function(item) insert_zcite(item, buf, win, pos) end),
   }):find()
 end
 
@@ -349,6 +523,8 @@ function M.setup(opts)
     callback = function(ev)
       vim.keymap.set("n", "<leader>zz", function() M.telescope() end,
         { buffer = ev.buf, desc = "Cite from Zotero (\\zcite + refs.bib)" })
+      vim.keymap.set("n", "<leader>zx", function() M.telescope_bib() end,
+        { buffer = ev.buf, desc = "Cite from refs.bib (\\zcite)" })
     end,
   })
   vim.api.nvim_create_user_command("Zcite", function(a) M.pick(a.args ~= "" and a.args or nil) end, { nargs = "?" })

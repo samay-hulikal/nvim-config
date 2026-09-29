@@ -1,7 +1,10 @@
--- Allows you to select a template for a fresh .tex file
+-- Allows you to select a template for a fresh .tex file (and creates refs.bib next to it)
 vim.api.nvim_create_autocmd("BufNewFile", {
   pattern = "*.tex",
-  callback = function()
+  callback = function(ev)
+    -- folder of the new .tex file (grab it now, before the picker changes the current buffer)
+    local dir = vim.fn.fnamemodify(ev.file, ":p:h")
+
     vim.defer_fn(function()
       local template_dir = vim.fn.expand("~/.config/nvim/templates/")
       local files = vim.fn.glob(template_dir .. "*.tex", false, true)
@@ -28,6 +31,17 @@ vim.api.nvim_create_autocmd("BufNewFile", {
             actions.close(prompt_bufnr)
             if selection then
               vim.cmd("0r " .. template_dir .. selection[1] .. ".tex")
+
+              -- create an empty refs.bib alongside the note (never overwrites an existing one)
+              local bib = dir .. "/refs.bib"
+              if vim.fn.filereadable(bib) == 0 then
+                vim.fn.mkdir(dir, "p")
+                local fh = io.open(bib, "w")
+                if fh then
+                  fh:close()
+                  vim.notify("Created " .. vim.fn.fnamemodify(bib, ":~"), vim.log.levels.INFO)
+                end
+              end
             end
           end)
           return true
